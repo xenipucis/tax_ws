@@ -43,11 +43,13 @@ public class JobsEndpoint {
 							.getJob()
 							.parallelStream()
 							.map((JobType jt) ->  
-									 new Job(
-											jt.getAmount().getNetAmount(),
-											jt.getAmount().getGrossAmount(),
-											jt.getAmount().getVatAmount(),
-											jt.getVatRate())
+									 new Job
+									 		.JobBuilder()
+									 		.withGrossAmount(jt.getAmount().getGrossAmount())
+									 		.withNetAmount(jt.getAmount().getNetAmount())
+									 		.withVatAmount(jt.getAmount().getVatAmount())
+									 		.withVatRate(jt.getVatRate())
+									 		.build()
 							).collect(Collectors.toList())
 					)
 					.parallelStream()

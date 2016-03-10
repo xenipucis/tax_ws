@@ -66,8 +66,8 @@ public class TaxController {
     		throw new InvalidAmountValueException();
     	}
     	
-    	final Job job = new Job();
-    	job.setVatRate(vatRate);
+    	final Job job = new Job.JobBuilder().withVatRate(vatRate).build();
+    	
     	if (typeOfAmount.equals(AmountType.GROSS_AMOUNT.getName())) {
     		job.setGrossAmount(valueOfAmount);
     	} else if (typeOfAmount.equals(AmountType.NET_AMOUNT.getName())) {

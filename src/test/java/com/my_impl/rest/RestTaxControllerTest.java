@@ -28,19 +28,11 @@ public class RestTaxControllerTest {
 	@Autowired
 	private WebApplicationContext wac;
 	
-	@Autowired
-	private JobsService jobsService;
-	
 	private MockMvc mockMvc;
 	
 	@Before
 	public void setup() {
 	    this.mockMvc = webAppContextSetup(this.wac).build();
-	}
-	
-	@Test
-	public void testJobsServiceShouldComplete() {
-		Assert.notNull(jobsService);
 	}
 	
 	@Test

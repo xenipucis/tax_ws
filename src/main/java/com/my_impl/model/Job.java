@@ -13,18 +13,15 @@ public class Job {
 	private BigDecimal netAmount;
 	private BigDecimal vatRate;
 	
-	public Job() {
+	private Job() {
 		
 	}
 	
-	public Job(final BigDecimal _netAmount,
-			   final BigDecimal _grossAmount,
-			   final BigDecimal _vatAmount,
-			   final BigDecimal _vatRate) {
-		netAmount = _netAmount;
-		grossAmount = _grossAmount;
-		vatAmount = _vatAmount;
-		vatRate = _vatRate;
+	private Job(JobBuilder jobBuilder) {
+		this.grossAmount = jobBuilder.grossAmount;
+		this.netAmount = jobBuilder.netAmount;
+		this.vatAmount = jobBuilder.vatAmount;
+		this.vatRate = jobBuilder.vatRate;
 	}
 	
 	public BigDecimal getGrossAmount() {
@@ -57,5 +54,53 @@ public class Job {
 	
 	public void setVatRate(final BigDecimal _vatRate) {
 		vatRate = _vatRate;
+	}
+	
+	public static class JobBuilder {
+		private BigDecimal grossAmount;
+		private BigDecimal vatAmount;
+		private BigDecimal netAmount;
+		private BigDecimal vatRate;
+		
+		
+		
+		public JobBuilder withGrossAmount(BigDecimal grossAmount) {
+			this.grossAmount = grossAmount;
+			return this;
+		}
+		
+		public JobBuilder withNetAmount(BigDecimal netAmount) {
+			this.netAmount = netAmount;
+			return this;
+		}
+		
+		public JobBuilder withVatAmount(BigDecimal vatAmount) {
+			this.vatAmount = vatAmount;
+			return this;
+		}
+		
+		public JobBuilder withVatRate(BigDecimal vatRate) {
+			this.vatRate = vatRate;
+			return this;
+		}
+		
+		public Job build () {
+			return new Job(this);
+		}
+	}
+	
+	@Override
+	public boolean equals(Object that) {
+		if (that == null) { return false; }
+		if (that.getClass() != getClass()) {
+			return false;
+		}
+		
+		Job job = (Job) that;
+		
+		return ((this.getGrossAmount().setScale(Job.NUMBER_OF_DECIMALS).subtract(job.getGrossAmount().setScale(Job.NUMBER_OF_DECIMALS)).doubleValue() == 0))
+			&& ((this.getNetAmount().setScale(Job.NUMBER_OF_DECIMALS).subtract(job.getNetAmount().setScale(Job.NUMBER_OF_DECIMALS)).doubleValue() == 0))
+            && ((this.getVatAmount().setScale(Job.NUMBER_OF_DECIMALS).subtract(job.getVatAmount().setScale(Job.NUMBER_OF_DECIMALS)).doubleValue() == 0))
+			&& ((this.getVatRate().setScale(Job.NUMBER_OF_DECIMALS).subtract(job.getVatRate().setScale(Job.NUMBER_OF_DECIMALS)).doubleValue() == 0));		
 	}
 }

@@ -1,0 +1,68 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+		   xmlns:tns="http://my_domain.com/compute_vat_net_gross"
+           targetNamespace="http://my_domain.com/compute_vat_net_gross"
+           elementFormDefault="qualified">
+      
+  <xs:element name="getJobsRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="job" type="tns:job_type" minOccurs="0" maxOccurs="1000" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  
+  <xs:element name="getJobsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="job" type="tns:response_job_type" minOccurs="0" maxOccurs="1000" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:complexType name="response_job_type">
+    <xs:sequence>
+      <xs:element name="net_amount" type="tns:amount_type"/>
+      <xs:element name="gross_amount" type="tns:amount_type"/>
+      <xs:element name="vat_amount" type="tns:amount_type"/>
+      <xs:element name="vat_rate" type="tns:vat_enum_percent_type"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="job_type">
+    <xs:sequence>
+      <xs:element name="amount" type="tns:type_of_amount_type" />
+      <xs:element name="vat_rate" type="tns:vat_enum_percent_type" />
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="type_of_amount_type">
+    <xs:choice>
+      <xs:element name="gross_amount" type="tns:amount_type" />
+      <xs:element name="net_amount" type="tns:amount_type" />
+      <xs:element name="vat_amount" type="tns:amount_type" />
+    </xs:choice>
+  </xs:complexType>
+
+  <xs:simpleType name="amount_type">
+    <xs:restriction base="xs:decimal">
+      <xs:minExclusive value="0" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="vat_enum_percent_type">
+    <xs:restriction base="tns:percent_type">
+      <xs:enumeration value="10" />
+      <xs:enumeration value="12" />
+      <xs:enumeration value="13" />
+      <xs:enumeration value="20" />
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="percent_type">
+    <xs:restriction base="xs:decimal">
+      <xs:minExclusive value="0" />
+      <xs:maxInclusive value="100" />
+    </xs:restriction>
+  </xs:simpleType>     
+
+</xs:schema>

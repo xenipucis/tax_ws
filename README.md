@@ -21,4 +21,4 @@ General:
 
 The validations should work for both implementations (Rest & SOAP).
 I've did unit tests for controller & service levels.
-The calculations are guaranteed for first 4 decimals after the comma. (but that is configurable; if you want to know more about, there is the variable NUMBER_OF_DECIMALS from Job)
+The calculations are guaranteed for first 4 decimals after the comma. (but that is configurable; if you want to know more about, there is the variable NUMBER_OF_DECIMALS from Job class)
